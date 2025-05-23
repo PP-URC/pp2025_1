@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Análisis de la Distribución Horaria de Incidentes</title>
+
+<!-- MathJax CDN -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+<style>
+  body { font-family: Arial, sans-serif; max-width: 900px; margin: auto; padding: 20px; }
+  h1, h2, h3 { color: #003366; }
+  figure { text-align: center; margin: 20px 0; }
+  figcaption { font-style: italic; color: #666; }
+  img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+
+<h1>Análisis de la Distribución Horaria de Incidentes</h1>
+
+<h2>Introducción</h2>
+<p>Se estudió la distribución de incidentes delictivos a lo largo del día, agrupando los datos por hora (0 a 23). El objetivo fue modelar esta variación temporal para entender patrones periódicos que pudieran relacionarse con horarios de mayor riesgo.</p>
+
+<h2>Visualización Inicial</h2>
+<p>Se obtuvo un histograma de conteos por hora \( y_i \) para cada hora \( x_i \in \{0,1,\ldots,23\} \), mostrando una clara periodicidad diaria:</p>
+<p>\[
+(x_i, y_i), \quad i=0, \ldots, 23
+\]</p>
+
+<h2>Modelado con Ajuste Polinomial</h2>
+<p>Primero se intentó un ajuste polinomial de grado 4 al conjunto de datos.</p>
+<p>El modelo resultó con un coeficiente de determinación \( R^2 = 0.506 \), indicando una explicación moderada de la variabilidad en los datos.</p>
+
+<h2>Modelado con Funciones Senoidales</h2>
+<p>Debido a la naturaleza periódica, se decidió aproximar la serie de datos con funciones seno, que capturan patrones repetitivos.</p>
+
+<h3>Modelo con Tres Términos Senoidales</h3>
+<p>El modelo es:</p>
+<p>\[
+y(x) = a_1 \sin\left(b_1 x + c_1\right) + a_2 \sin\left(b_2 x + c_2\right) + a_3 \sin\left(b_3 x + c_3\right) + d
+\]</p>
+<p>donde:</p>
+<ul>
+  <li>\(b_1 = \frac{2\pi}{24}\) (frecuencia diaria),</li>
+  <li>\(b_2 = \frac{4\pi}{24}\) (doble frecuencia diaria),</li>
+  <li>\(b_3 = \frac{6\pi}{24}\) (triple frecuencia diaria).</li>
+</ul>
+<p>Este modelo alcanzó un ajuste excelente con:</p>
+<p>\[
+R^2 = 0.94, \quad \text{RMSE} = 42.67
+\]</p>
+
+<h2>Evaluación del Modelo</h2>
+<p>Se usaron las siguientes métricas para evaluar la bondad de ajuste:</p>
+<ul>
+  <li><strong>Coeficiente de determinación \( R^2 \):</strong>
+  \[
+  R^2 = 1 - \frac{\sum_{i=0}^{23} (y_i - \hat{y}_i)^2}{\sum_{i=0}^{23} (y_i - \bar{y})^2}
+  \]</li>
+  <li><strong>Raíz del error cuadrático medio (RMSE):</strong>
+  \[
+  RMSE = \sqrt{\frac{1}{24} \sum_{i=0}^{23} (y_i - \hat{y}_i)^2}
+  \]</li>
+</ul>
+
+<h2>Visualización de Resultados</h2>
+
+<figure>
+  <img src="URL_DE_TU_IMAGEN_SENOIDAL" alt="Distribución de incidentes y modelo senoidal ajustado" />
+  <figcaption>Distribución de incidentes por hora y modelo ajustado con funciones senoidales.</figcaption>
+</figure>
+
+<figure>
+  <img src="URL_DE_TU_IMAGEN_POLINOMIAL" alt="Ajuste polinomial grado 4" />
+  <figcaption>Ajuste polinomial grado 4 para los incidentes por hora.</figcaption>
+</figure>
+
+<h2>Conclusión</h2>
+<p>El análisis muestra que el modelo senoidal con tres términos describe mucho mejor la periodicidad de los incidentes por hora que un ajuste polinomial, evidenciado por un mayor valor de \( R^2 \) y un menor RMSE. Este enfoque permite identificar con mayor precisión las horas de mayor riesgo y puede ayudar a optimizar estrategias de prevención.</p>
+
+</body>
+</html>
