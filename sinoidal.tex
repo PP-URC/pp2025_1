@@ -1,0 +1,130 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{float}
+
+\title{Análisis de la Distribución Horaria de Incidentes}
+\author{Tu Nombre}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción}
+
+Se estudió la distribución de incidentes delictivos a lo largo del día, agrupando los datos por hora (0 a 23). El objetivo fue modelar esta variación temporal para entender patrones periódicos que pudieran relacionarse con horarios de mayor riesgo.
+
+\section{Visualización Inicial}
+
+Se obtuvo un histograma de conteos por hora \( y_i \) para cada hora \( x_i \in \{0,1,\ldots,23\} \), mostrando una clara periodicidad diaria:
+
+\[
+(x_i, y_i), \quad i=0, \ldots, 23
+\]
+
+\section{Modelado con Funciones Senoidales}
+
+Debido a la naturaleza periódica, se decidió aproximar la serie de datos con funciones seno, que capturan patrones repetitivos.
+
+\subsection{Modelo Senoidal Simple}
+
+La forma básica del modelo es:
+
+\[
+y(x) = a \sin(bx + c) + d
+\]
+
+donde:
+
+\begin{itemize}
+    \item \( a \) es la amplitud,
+    \item \( b \) la frecuencia angular,
+    \item \( c \) el desfase (fase),
+    \item \( d \) un desplazamiento vertical (offset).
+\end{itemize}
+
+Se ajustó este modelo con parámetros iniciales basados en la periodicidad diaria esperada \( \left(b \approx \frac{2\pi}{24}\right) \).
+
+\subsection{Modelo con Dos Términos Senoidales}
+
+Para capturar patrones más complejos (por ejemplo, dos picos en el día), se extendió el modelo a:
+
+\[
+y(x) = a_1 \sin(b_1 x + c_1) + a_2 \sin(b_2 x + c_2) + d
+\]
+
+donde:
+
+\[
+b_1 = \frac{2\pi}{24} \quad \text{(frecuencia diaria)}, \quad b_2 = \frac{4\pi}{24} \quad \text{(doble frecuencia diaria)}.
+\]
+
+Este modelo mejoró significativamente la explicación de la variabilidad en los datos, con un coeficiente de determinación \( R^2 \approx 0.82 \).
+
+\subsection{Modelo con Tres Términos Senoidales}
+
+Finalmente, se propuso un modelo aún más flexible con tres términos:
+
+\[
+y(x) = a_1 \sin(b_1 x + c_1) + a_2 \sin(b_2 x + c_2) + a_3 \sin(b_3 x + c_3) + d
+\]
+
+con frecuencias:
+
+\[
+b_1 = \frac{2\pi}{24}, \quad b_2 = \frac{4\pi}{24}, \quad b_3 = \frac{6\pi}{24}.
+\]
+
+Este modelo alcanzó un ajuste excelente con:
+
+\[
+R^2 = 0.94, \quad \text{RMSE} = 85.34,
+\]
+
+lo que indica que el modelo explica el 94\% de la variabilidad de los incidentes por hora.
+
+\section{Evaluación del Modelo}
+
+Para medir qué tan bien el modelo ajusta los datos se usaron:
+
+\begin{itemize}
+    \item \textbf{Coeficiente de determinación \( R^2 \):}
+
+    \[
+    R^2 = 1 - \frac{\sum_{i=0}^{23} (y_i - \hat{y}_i)^2}{\sum_{i=0}^{23} (y_i - \bar{y})^2}
+    \]
+
+    donde \( \hat{y}_i \) es el valor predicho y \( \bar{y} \) la media de los datos.
+
+    \item \textbf{Raíz del error cuadrático medio (RMSE):}
+
+    \[
+    RMSE = \sqrt{\frac{1}{24} \sum_{i=0}^{23} (y_i - \hat{y}_i)^2}
+    \]
+\end{itemize}
+
+Ambas métricas indican un buen ajuste, con valores cercanos a 1 para \( R^2 \) y un RMSE razonable dado el rango de datos.
+
+\section{Visualización de Resultados}
+
+A continuación se muestran los gráficos con los datos reales y la curva ajustada.
+
+\begin{figure}[H]
+    \centering
+    % Inserta aquí tu gráfico exportado (png, jpg, pdf...)
+    \includegraphics[width=0.9\textwidth]{ruta/a/tu/grafico.png}
+    \caption{Distribución de incidentes por hora (barras) y modelo ajustado (línea).}
+\end{figure}
+
+\section{Conclusión}
+
+El análisis demuestra que la frecuencia de incidentes delictivos a lo largo del día sigue un patrón periódico que puede modelarse eficazmente con una suma de funciones senoidales. Este modelo permite identificar las horas de mayor riesgo (picos) y puede apoyar decisiones en prevención y vigilancia.
+
+\vspace{1em}
+\textbf{Opcional:} Se pueden explorar modelos aún más complejos o incluir variables adicionales para mejorar el ajuste.
+
+\end{document}
